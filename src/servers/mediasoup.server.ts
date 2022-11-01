@@ -120,6 +120,8 @@ io.on("connection", async (socket) => {
             // router 建立在房間上 所以發布/接收 都要綁定在同一個 room
             if (room.router instanceof Router) {
                 let transport = await createWebRtcTransport(room.router, callback)
+                console.log('dump transport')
+                console.debug(transport);
                 // 為個別用戶加入 transport
                 if (poolMember.exist(socket.id)) {
                     let member = poolMember.get(socket.id);
