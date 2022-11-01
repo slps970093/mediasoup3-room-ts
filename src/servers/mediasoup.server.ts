@@ -158,6 +158,9 @@ io.on("connection", async (socket) => {
         // call produce based on the prameters from the client
         let member = poolMember.get(socket.id);
 
+        console.log('顯示 member.producerTransport')
+        console.debug(member.producerTransport);
+
         for (let transportId in member.producerTransport) {
 
             // error
