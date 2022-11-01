@@ -310,8 +310,10 @@ const broadcastProducerClose = (roomId:string, producerId: string) => {
 const createWebRtcTransport = async (router: Router,callback: (arg0: { params: { id: string; iceParameters: IceParameters; iceCandidates: IceCandidate[]; dtlsParameters: DtlsParameters; } | { error: unknown; }; }) => void) => {
     try {
         let curlResult = await axios.get('ifconfig.me');
-        let publicIp = process.env['WEBRTC_ANNOUNCED_IP'];
+        let publicIp = process.env.WEBRTC_ANNOUNCED_IP;
 
+        console.log('public ip:' + publicIp);
+        
         const webRtcTransportOptions = {
             listenIps: [
                 {
