@@ -157,15 +157,13 @@ io.on("connection", async (socket) => {
     socket.on('transport-produce', async ({ kind, rtpParameters, appData }, callback) => {
         // call produce based on the prameters from the client
         let member = poolMember.get(socket.id);
-
         console.log('顯示 member.producerTransport')
         console.debug(member.producerTransport);
 
-        for (let transportId in member.producerTransport) {
+        // https://stackoverflow.com/questions/37699320/iterating-over-typescript-map
+        for (let [transportId, transport] of member.producerTransport) {
 
-            // error
             console.log('顯示 transportId => ' + transportId );
-            let transport = await member.producerTransport.get(transportId);
             console.log('顯示 transport obj => ' + transport );
 
             if (typeof transport !== "undefined") {
@@ -185,6 +183,9 @@ io.on("connection", async (socket) => {
                     producerId: producer.id,
                     memberId: socket.id
                 });
+
+                // 紀錄一下房間發送者
+                serviceRoomProducer.putRoomProducer(member.roomId,socket.id,producer);
 
                 member.producerTransport.set(transportId, transport);
 
