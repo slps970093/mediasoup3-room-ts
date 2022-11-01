@@ -10,7 +10,7 @@ const ENV_WEB_SERVER_PORT = (typeof process.env.WEB_SERVER_PORT == "undefined") 
     80 : parseInt(process.env.WEB_SERVER_PORT);
 
 new Promise(async function (resolve, reject) {
-    MediaSoupServer.listen(8888);
+    MediaSoupServer.listen(ENV_WEB_SERVER_PORT);
 
     console.log(`mediasoup server is start! http://localhost:${ENV_WEB_SERVER_PORT}`)
 })
