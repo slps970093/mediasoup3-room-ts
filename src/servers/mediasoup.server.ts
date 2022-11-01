@@ -10,7 +10,7 @@ import {MediaSoupWorker} from "../libraries/MediaSoupWorker";
 import {RoomPool} from "../modules/room/pools/room.pool";
 import {RoomService} from "../modules/room/services/room.service";
 import {RoomProducerService} from "../modules/room/services/room.producer.service";
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 const httpServer = createServer((request, response) => {
     if (request.url == '/health') {
@@ -307,8 +307,8 @@ const broadcastProducerClose = (roomId:string, producerId: string) => {
 
 const createWebRtcTransport = async (router: Router,callback: (arg0: { params: { id: string; iceParameters: IceParameters; iceCandidates: IceCandidate[]; dtlsParameters: DtlsParameters; } | { error: unknown; }; }) => void) => {
     try {
-        let curlResult = await fetch('ifconfig.me');
-        let publicIp = await curlResult.text();
+        let curlResult = await axios.get('ifconfig.me');
+        let publicIp = process.env['WEBRTC_ANNOUNCED_IP'];
 
         const webRtcTransportOptions = {
             listenIps: [

@@ -1,4 +1,5 @@
 import {Worker} from "mediasoup/node/lib/Worker";
+import * as mediasoup from 'mediasoup';
 
 export class MediaSoupWorker {
     public static async create(): Promise<Worker> {
@@ -7,7 +8,7 @@ export class MediaSoupWorker {
         const ENV_RTC_MAX_PORT = ( typeof process.env.RTC_MAX_PORT == "undefined" ) ?
             2020 : parseInt(process.env.RTC_MAX_PORT);
 
-        let worker = await require('mediasoup').createWorker({
+        let worker = await mediasoup.createWorker({
             logLevel : "debug",
             logTags  : [ "ice", "dtls" ],
             rtcMinPort: ENV_RTC_MIN_PORT,
