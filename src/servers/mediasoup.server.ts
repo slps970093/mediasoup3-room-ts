@@ -11,6 +11,9 @@ import {RoomPool} from "../modules/room/pools/room.pool";
 import {RoomService} from "../modules/room/services/room.service";
 import {RoomProducerService} from "../modules/room/services/room.producer.service";
 import axios from 'axios';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const httpServer = createServer((request, response) => {
     if (request.url == '/health') {
@@ -313,7 +316,7 @@ const createWebRtcTransport = async (router: Router,callback: (arg0: { params: {
         let publicIp = process.env.WEBRTC_ANNOUNCED_IP;
 
         console.log('public ip:' + publicIp);
-        
+
         const webRtcTransportOptions = {
             listenIps: [
                 {
