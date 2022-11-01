@@ -121,7 +121,6 @@ io.on("connection", async (socket) => {
             if (room.router instanceof Router) {
                 let transport = await createWebRtcTransport(room.router, callback)
                 console.log('dump transport')
-                console.debug(transport);
                 // 為個別用戶加入 transport
                 if (poolMember.exist(socket.id)) {
                     let member = poolMember.get(socket.id);
@@ -161,7 +160,10 @@ io.on("connection", async (socket) => {
 
         for (let transportId in member.producerTransport) {
 
+            // error
+            console.log('顯示 transportId => ' + transportId );
             let transport = await member.producerTransport.get(transportId);
+            console.log('顯示 transport obj => ' + transport );
 
             if (typeof transport !== "undefined") {
                 let producer = await transport.produce({
@@ -310,9 +312,6 @@ const broadcastProducerClose = (roomId:string, producerId: string) => {
 const createWebRtcTransport = async (router: Router,callback: (arg0: { params: { id: string; iceParameters: IceParameters; iceCandidates: IceCandidate[]; dtlsParameters: DtlsParameters; } | { error: unknown; }; }) => void) => {
     try {
         let publicIp = process.env.WEBRTC_ANNOUNCED_IP;
-
-        console.log('public ip:' + publicIp);
-        console.debug(process.env)
 
         const webRtcTransportOptions = {
             listenIps: [
